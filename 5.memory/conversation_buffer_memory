@@ -1,0 +1,18 @@
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+
+from langchain.llms import OpenAI
+from langchain.chains import LLMChain, ConversationChain
+from langchain.chains.conversation.memory import (ConversationBufferMemory, ConversationSummaryMemory,
+                                                  ConversationBufferWindowMemory)
+from langchain.memory import ConversationTokenBufferMemory
+
+llm = OpenAI(temperature=0)
+
+conversation = ConversationChain(llm=llm, verbose=True, memory=ConversationBufferMemory())
+conversation.predict(input="Hi. How are you?")
+conversation.predict(input="I'm shiv")
